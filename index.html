@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mind Map กฎหมายอาญา - ชีวิตและร่างกาย</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700;800&family=Noto+Serif+Thai:wght@400;700&display=swap');
+
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --card: #1e2530;
+    --gold: #f0c040;
+    --gold-light: #f7d97a;
+    --red: #e05252;
+    --blue: #4a9eff;
+    --green: #4caf50;
+    --purple: #a78bfa;
+    --orange: #fb923c;
+    --teal: #2dd4bf;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-dim: #8b949e;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Sarabun', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ---- HEADER ---- */
+  .header {
+    background: linear-gradient(135deg, #1a1200 0%, #0d1117 50%, #001a1a 100%);
+    border-bottom: 2px solid var(--gold);
+    padding: 28px 24px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(240,192,64,.15) 0%, transparent 60%);
+  }
+  .header h1 {
+    font-family: 'Noto Serif Thai', serif;
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    color: var(--gold);
+    letter-spacing: .5px;
+    position: relative;
+  }
+  .header .sub {
+    font-size: .9rem; color: var(--text-dim); margin-top: 6px;
+    position: relative;
+  }
+  .badge {
+    display: inline-block; background: var(--gold); color: #000;
+    font-weight: 800; font-size: .72rem; padding: 2px 10px;
+    border-radius: 20px; margin-bottom: 8px; letter-spacing: 1px;
+  }
+
+  /* ---- DEFINITIONS BOX ---- */
+  .defs {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    padding: 16px 20px; max-width: 960px; margin: 0 auto;
+  }
+  @media(max-width:640px){ .defs{ grid-template-columns:1fr; } }
+  .def-card {
+    background: var(--card); border-radius: 10px;
+    border-left: 4px solid; padding: 14px 16px;
+    transition: transform .2s;
+  }
+  .def-card:hover { transform: translateY(-2px); }
+  .def-card.intent { border-color: var(--red); }
+  .def-card.negligent { border-color: var(--blue); }
+  .def-card h3 {
+    font-size: .95rem; font-weight: 700; margin-bottom: 6px;
+  }
+  .def-card.intent h3 { color: var(--red); }
+  .def-card.negligent h3 { color: var(--blue); }
+  .def-card p { font-size: .82rem; color: var(--text-dim); line-height: 1.6; }
+  .def-card strong { color: var(--text); }
+
+  /* ---- SECTION TABS ---- */
+  .tabs {
+    display: flex; gap: 8px; padding: 0 20px 0;
+    max-width: 960px; margin: 4px auto 0;
+    flex-wrap: wrap;
+  }
+  .tab {
+    padding: 8px 18px; border-radius: 8px; cursor: pointer;
+    font-size: .85rem; font-weight: 600; border: 2px solid transparent;
+    transition: all .25s; background: var(--card);
+  }
+  .tab:hover { opacity: .85; }
+  .tab.active { color: #000; }
+
+  /* ---- MAIN GRID ---- */
+  .main { max-width: 960px; margin: 0 auto; padding: 0 20px 40px; }
+
+  .section-block {
+    display: none; animation: fadeUp .35s ease;
+  }
+  .section-block.show { display: block; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ---- MATRIX TABLE ---- */
+  .matrix-wrap { overflow-x: auto; margin-top: 14px; }
+  table {
+    width: 100%; border-collapse: collapse;
+    font-size: .83rem;
+  }
+  thead tr { background: rgba(255,255,255,.05); }
+  th {
+    padding: 10px 12px; text-align: left;
+    font-weight: 700; font-size: .8rem; letter-spacing: .5px;
+    border-bottom: 2px solid var(--border);
+    white-space: nowrap;
+  }
+  td {
+    padding: 9px 12px; border-bottom: 1px solid rgba(255,255,255,.05);
+    vertical-align: middle;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(255,255,255,.03); }
+
+  .mat-num {
+    display: inline-block;
+    font-weight: 800; font-size: .95rem;
+    padding: 3px 10px; border-radius: 6px;
+    min-width: 46px; text-align: center;
+  }
+  .plus-tag {
+    display: inline-block;
+    font-size: .72rem; font-weight: 700;
+    padding: 2px 7px; border-radius: 4px;
+    border: 1px solid; margin-left: 4px;
+    vertical-align: middle; white-space: nowrap;
+  }
+
+  .result-cell { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+
+  /* Colors per section */
+  .c-red   { color: var(--red);    background: rgba(224,82,82,.12); }
+  .c-blue  { color: var(--blue);   background: rgba(74,158,255,.12); }
+  .c-green { color: var(--green);  background: rgba(76,175,80,.12); }
+  .c-purple{ color: var(--purple); background: rgba(167,139,250,.12); }
+  .c-orange{ color: var(--orange); background: rgba(251,146,60,.12); }
+  .c-teal  { color: var(--teal);   background: rgba(45,212,191,.12); }
+  .c-gold  { color: var(--gold);   background: rgba(240,192,64,.12); }
+
+  .border-red    { border-color: var(--red); }
+  .border-blue   { border-color: var(--blue); }
+  .border-green  { border-color: var(--green); }
+  .border-purple { border-color: var(--purple); }
+  .border-orange { border-color: var(--orange); }
+  .border-teal   { border-color: var(--teal); }
+
+  /* ---- SECTION HEADER ---- */
+  .sec-header {
+    display: flex; align-items: center; gap: 14px;
+    padding: 18px 0 10px;
+  }
+  .sec-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; flex-shrink: 0;
+  }
+  .sec-title h2 { font-size: 1.15rem; font-weight: 800; }
+  .sec-title p  { font-size: .8rem; color: var(--text-dim); margin-top: 2px; }
+
+  /* ---- NOTE CARD ---- */
+  .note {
+    margin-top: 10px; padding: 12px 14px;
+    border-radius: 8px; font-size: .8rem;
+    border: 1px solid; line-height: 1.7;
+  }
+
+  /* ---- WEAPON CARDS ---- */
+  .weapon-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+    margin-top: 14px;
+  }
+  @media(max-width:500px){ .weapon-grid{ grid-template-columns:1fr; } }
+  .weapon-card {
+    background: var(--card); border-radius: 10px;
+    border-top: 3px solid; padding: 14px;
+  }
+  .weapon-card h4 { font-size: .9rem; font-weight: 700; margin-bottom: 10px; }
+  .weapon-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 6px 0; border-bottom: 1px solid var(--border); font-size: .8rem;
+  }
+  .weapon-row:last-child { border-bottom: none; }
+  .weapon-row .desc { color: var(--text-dim); flex: 1; padding-right: 8px; }
+
+  /* ---- OVERVIEW MODE ---- */
+  .overview-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px; margin-top: 14px;
+  }
+  .ov-card {
+    background: var(--card); border-radius: 12px;
+    border: 1px solid var(--border); overflow: hidden;
+    transition: transform .2s, box-shadow .2s;
+    cursor: pointer;
+  }
+  .ov-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,.4);
+  }
+  .ov-top {
+    padding: 14px 16px 10px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .ov-icon { font-size: 1.5rem; }
+  .ov-name { font-weight: 800; font-size: 1rem; }
+  .ov-type { font-size: .75rem; margin-top: 2px; }
+  .ov-body { padding: 10px 16px 14px; }
+  .ov-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 4px 0; font-size: .8rem; border-bottom: 1px solid rgba(255,255,255,.04);
+  }
+  .ov-row:last-child { border: none; }
+  .ov-row .ov-label { color: var(--text-dim); }
+
+  /* click hint */
+  .click-hint {
+    text-align: center; font-size: .78rem; color: var(--text-dim);
+    margin: 6px 0 0; padding-bottom: 8px;
+  }
+
+  /* footer */
+  footer {
+    text-align: center; font-size: .75rem; color: var(--text-dim);
+    padding: 20px; border-top: 1px solid var(--border);
+  }
+
+  /* row highlight */
+  .row-death td { background: rgba(224,82,82,.06); }
+  .row-heavy td { background: rgba(251,146,60,.06); }
+  .row-mild  td { background: rgba(74,158,255,.06); }
+  .row-none  td { background: rgba(45,212,191,.06); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="badge">ชุดวิชา 41216 กฎหมายอาญา · มสธ.</div>
+  <h1>⚖️ Mind Map ความผิดต่อชีวิต ร่างกาย และอาวุธ</h1>
+  <p class="sub">หน่วยที่ 5–6 · มาตรา 288–391 · จัดทำโดย จิราเมธ โปติ๊บ 6840030651 มหาวิทยาลัยสุโขทัยธรรมาธิราช </p>
+</div>
+
+<!-- DEFINITION BOXES -->
+<div class="defs">
+  <div class="def-card intent">
+    <h3>🎯 กระทำ"โดยเจตนา"</h3>
+    <p>กระทำโดย<strong>รู้สำนึก</strong>ในการที่กระทำ ในขณะเดียวกันก็<strong>ประสงค์ต่อผล</strong>หรือ<strong>ย่อมเล็งเห็นผล</strong>ของการกระทำนั้น</p>
+  </div>
+  <div class="def-card negligent">
+    <h3>💨 กระทำ"โดยประมาท"</h3>
+    <p>กระทำความผิดมิใช่โดยเจตนา แต่กระทำ<strong>ปราศจากความระมัดระวัง</strong>ซึ่งบุคคลในภาวะเช่นนั้นจักต้องมีตามวิสัยและพฤติการณ์ และผู้กระทำ<strong>ใช้ความระมัดระวังไม่เพียงพอ</strong></p>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs" id="tabs">
+  <div class="tab active" style="background:var(--red);color:#fff;border-color:var(--red)" onclick="showSection('all')">🗺️ ภาพรวม</div>
+  <div class="tab" style="border-color:var(--red);color:var(--red)" onclick="showSection('kill')">🔴 ฆ่า (เจตนา)</div>
+  <div class="tab" style="border-color:var(--orange);color:var(--orange)" onclick="showSection('hurt')">🟠 ทำร้าย (เจตนา)</div>
+  <div class="tab" style="border-color:var(--blue);color:var(--blue)" onclick="showSection('neg')">🔵 ประมาท</div>
+  <div class="tab" style="border-color:var(--purple);color:var(--purple)" onclick="showSection('mob')">🟣 ชุมนุม</div>
+  <div class="tab" style="border-color:var(--teal);color:var(--teal)" onclick="showSection('weapon')">🟦 อาวุธ</div>
+</div>
+
+<div class="main">
+
+<!-- ======== OVERVIEW ======== -->
+<div class="section-block show" id="sec-all">
+  <div class="click-hint">👆 คลิกที่การ์ดเพื่อดูรายละเอียด หรือเลือก Tab ด้านบน</div>
+  <div class="overview-grid">
+
+    <div class="ov-card" onclick="showSection('kill')">
+      <div class="ov-top" style="border-color:rgba(224,82,82,.3)">
+        <div class="ov-icon">🔴</div>
+        <div>
+          <div class="ov-name" style="color:var(--red)">ฆ่า — เจตนา</div>
+          <div class="ov-type" style="color:var(--text-dim)">ประสงค์ต่อผล / เล็งเห็นผล</div>
+        </div>
+      </div>
+      <div class="ov-body">
+        <div class="ov-row"><span class="ov-label">ถึงแก่ความตาย</span><span class="mat-num c-red" style="font-size:.85rem">ม.288</span></div>
+        <div class="ov-row"><span class="ov-label">+ เหตุฉกรรจ์</span><span class="mat-num c-red" style="font-size:.85rem">ม.289</span></div>
+        <div class="ov-row"><span class="ov-label">พยายาม ฆ่า</span><span class="mat-num c-red" style="font-size:.85rem">ม.288+พยายาม</span></div>
+      </div>
+    </div>
+
+    <div class="ov-card" onclick="showSection('hurt')">
+      <div class="ov-top" style="border-color:rgba(251,146,60,.3)">
+        <div class="ov-icon">🟠</div>
+        <div>
+          <div class="ov-name" style="color:var(--orange)">ทำร้าย — เจตนา</div>
+          <div class="ov-type" style="color:var(--text-dim)">ไม่มีเจตนาฆ่า แต่เจตนาทำร้าย</div>
+        </div>
+      </div>
+      <div class="ov-body">
+        <div class="ov-row"><span class="ov-label">ตาย</span><span class="mat-num c-orange" style="font-size:.85rem">ม.290</span></div>
+        <div class="ov-row"><span class="ov-label">อันตรายสาหัส</span><span class="mat-num c-orange" style="font-size:.85rem">ม.297</span></div>
+        <div class="ov-row"><span class="ov-label">อันตรายแก่กาย/จิต</span><span class="mat-num c-orange" style="font-size:.85rem">ม.295</span></div>
+        <div class="ov-row"><span class="ov-label">ไม่ได้รับอันตราย</span><span class="mat-num c-orange" style="font-size:.85rem">ม.391</span></div>
+      </div>
+    </div>
+
+    <div class="ov-card" onclick="showSection('neg')">
+      <div class="ov-top" style="border-color:rgba(74,158,255,.3)">
+        <div class="ov-icon">🔵</div>
+        <div>
+          <div class="ov-name" style="color:var(--blue)">ประมาท</div>
+          <div class="ov-type" style="color:var(--text-dim)">ปราศจากความระมัดระวัง</div>
+        </div>
+      </div>
+      <div class="ov-body">
+        <div class="ov-row"><span class="ov-label">ถึงแก่ความตาย</span><span class="mat-num c-blue" style="font-size:.85rem">ม.291</span></div>
+        <div class="ov-row"><span class="ov-label">อันตรายสาหัส</span><span class="mat-num c-blue" style="font-size:.85rem">ม.300</span></div>
+        <div class="ov-row"><span class="ov-label">อันตรายแก่กาย/จิต</span><span class="mat-num c-blue" style="font-size:.85rem">ม.390</span></div>
+        <div class="ov-row"><span class="ov-label">ไม่ได้รับอันตราย</span><span class="mat-num" style="font-size:.85rem;color:var(--text-dim);background:rgba(255,255,255,.08)">ไม่ผิด (ม.2)</span></div>
+      </div>
+    </div>
+
+    <div class="ov-card" onclick="showSection('mob')">
+      <div class="ov-top" style="border-color:rgba(167,139,250,.3)">
+        <div class="ov-icon">🟣</div>
+        <div>
+          <div class="ov-name" style="color:var(--purple)">ชุมนุม</div>
+          <div class="ov-type" style="color:var(--text-dim)">กระทำในกลุ่มชุมนุม</div>
+        </div>
+      </div>
+      <div class="ov-body">
+        <div class="ov-row"><span class="ov-label">ถึงแก่ความตาย</span><span class="mat-num c-purple" style="font-size:.85rem">ม.294</span></div>
+        <div class="ov-row"><span class="ov-label">อันตรายสาหัส</span><span class="mat-num c-purple" style="font-size:.85rem">ม.299</span></div>
+        <div class="ov-row"><span class="ov-label">อันตรายแก่กาย/จิต</span><span class="mat-num" style="font-size:.85rem;color:var(--text-dim);background:rgba(255,255,255,.08)">ไม่ผิด (ม.2)</span></div>
+      </div>
+    </div>
+
+    <div class="ov-card" onclick="showSection('weapon')" style="grid-column: span 2;">
+      <div class="ov-top" style="border-color:rgba(45,212,191,.3)">
+        <div class="ov-icon">🟦</div>
+        <div>
+          <div class="ov-name" style="color:var(--teal)">อาวุธ / อาวุธปืน</div>
+          <div class="ov-type" style="color:var(--text-dim)">ลหุโทษ — พา, ยิง, ชัก/แสดง</div>
+        </div>
+      </div>
+      <div class="ov-body">
+        <div class="ov-row"><span class="ov-label">พาอาวุธ(ปืน/อาวุธ)ไปในที่สาธารณะ</span><span class="mat-num c-teal" style="font-size:.85rem">ม.371</span></div>
+        <div class="ov-row"><span class="ov-label">ยิงปืน/ดินระเบิดโดยไม่มีเหตุในที่สาธารณะ</span><span class="mat-num c-teal" style="font-size:.85rem">ม.376</span></div>
+        <div class="ov-row"><span class="ov-label">ชักหรือแสดงอาวุธในการวิวาท</span><span class="mat-num c-teal" style="font-size:.85rem">ม.379</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- MASTER FORMULA NOTE -->
+  <div class="note" style="background:rgba(240,192,64,.07);border-color:rgba(240,192,64,.3);color:var(--gold);margin-top:16px">
+    <strong>💡 สูตรการปรับใช้หลัก:</strong><br>
+    <strong>ฐานความผิด = ลักษณะการกระทำ (เจตนา/ประมาท/ชุมนุม) + ผลที่เกิดขึ้น ± เหตุฉกรรจ์</strong><br>
+    <span style="font-size:.8rem;opacity:.85">หลักสำคัญ: ต้องมี "ความสัมพันธ์ระหว่างการกระทำและผล" — ผลนั้นต้องสัมพันธ์กับการกระทำแล้วเป็นความผิดมาตรา 2</span>
+  </div>
+</div>
+
+<!-- ======== ฆ่า ======== -->
+<div class="section-block" id="sec-kill">
+  <div class="sec-header">
+    <div class="sec-icon" style="background:rgba(224,82,82,.15)">🔴</div>
+    <div class="sec-title">
+      <h2 style="color:var(--red)">ฆ่า — กระทำโดยเจตนา</h2>
+      <p>ประสงค์ต่อผล หรือย่อมเล็งเห็นผล (มีเจตนาฆ่า)</p>
+    </div>
+  </div>
+  <div class="matrix-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th style="color:var(--red)">ฐานการกระทำ</th>
+          <th>เหตุฉกรรจ์ ม.289</th>
+          <th>ผลที่เกิด</th>
+          <th style="color:var(--gold)">มาตรา</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="row-death">
+          <td rowspan="2"><strong>ฆ่า</strong> (เจตนา)</td>
+          <td>—</td>
+          <td>ถึงแก่<strong>ความตาย</strong></td>
+          <td><span class="mat-num c-red">288</span></td>
+        </tr>
+        <tr class="row-death">
+          <td><span class="plus-tag c-red border-red">+ เหตุฉกรรจ์</span></td>
+          <td>ถึงแก่<strong>ความตาย</strong></td>
+          <td><span class="mat-num c-red">289</span></td>
+        </tr>
+        <tr class="row-heavy">
+          <td rowspan="4"><strong>ฆ่า</strong> (พยายาม)</td>
+          <td>—</td>
+          <td>ได้รับอันตราย<strong>สาหัส</strong></td>
+          <td><div class="result-cell"><span class="mat-num c-red">288</span><span class="plus-tag c-red border-red">+พยายาม</span></div></td>
+        </tr>
+        <tr class="row-heavy">
+          <td><span class="plus-tag c-red border-red">+ เหตุฉกรรจ์</span></td>
+          <td>ได้รับอันตราย<strong>สาหัส</strong></td>
+          <td><div class="result-cell"><span class="mat-num c-red">289</span><span class="plus-tag c-red border-red">+พยายาม</span></div></td>
+        </tr>
+        <tr class="row-mild">
+          <td>—</td>
+          <td>ได้รับอันตราย<strong>แก่กาย/จิตใจ</strong></td>
+          <td><div class="result-cell"><span class="mat-num c-red">288</span><span class="plus-tag c-red border-red">+พยายาม</span></div></td>
+        </tr>
+        <tr class="row-mild">
+          <td><span class="plus-tag c-red border-red">+ เหตุฉกรรจ์</span></td>
+          <td>ได้รับอันตราย<strong>แก่กาย/จิตใจ</strong></td>
+          <td><div class="result-cell"><span class="mat-num c-red">289</span><span class="plus-tag c-red border-red">+พยายาม</span></div></td>
+        </tr>
+        <tr class="row-none">
+          <td colspan="2"><strong>ฆ่า</strong> ไม่ได้รับอันตรายใดๆ</td>
+          <td><strong>ไม่ผิด</strong> ม.297, 295, 391</td>
+          <td><span style="font-size:.8rem;color:var(--text-dim)">ไม่ผิด</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="note" style="background:rgba(224,82,82,.07);border-color:rgba(224,82,82,.3)">
+    <strong style="color:var(--red)">📌 เหตุฉกรรจ์ ม.289</strong> เช่น ฆ่า บิดา มารดา ปู่ ย่า ตา ยาย, ฆ่าเจ้าพนักงาน, ฆ่าโดยทรมาน, ฆ่าโดยไตร่ตรองไว้ก่อน ฯลฯ → ยกโทษขึ้นเป็น ม.289 ซึ่งมีโทษหนักกว่า ม.288
+  </div>
+</div>
+
+<!-- ======== ทำร้าย ======== -->
+<div class="section-block" id="sec-hurt">
+  <div class="sec-header">
+    <div class="sec-icon" style="background:rgba(251,146,60,.15)">🟠</div>
+    <div class="sec-title">
+      <h2 style="color:var(--orange)">ทำร้าย — กระทำโดยเจตนา</h2>
+      <p>มีเจตนาทำร้าย <strong>แต่ไม่มีเจตนาฆ่า</strong></p>
+    </div>
+  </div>
+  <div class="matrix-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th style="color:var(--orange)">ฐานการกระทำ</th>
+          <th>เหตุฉกรรจ์ ม.289</th>
+          <th>ผลที่เกิด</th>
+          <th style="color:var(--gold)">มาตรา</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="row-death">
+          <td rowspan="2"><strong>ทำร้าย</strong></td>
+          <td>—</td>
+          <td>ถึงแก่<strong>ความตาย</strong></td>
+          <td><span class="mat-num c-orange">290</span></td>
+        </tr>
+        <tr class="row-death">
+          <td><span class="plus-tag c-orange border-orange">+ เหตุฉกรรจ์</span></td>
+          <td>ถึงแก่<strong>ความตาย</strong></td>
+          <td><span class="mat-num c-orange">290 วรรค 2</span></td>
+        </tr>
+        <tr class="row-heavy">
+          <td rowspan="2"><strong>ทำร้าย</strong></td>
+          <td>—</td>
+          <td>ได้รับอันตราย<strong>สาหัส</strong> (ผลฉกรรจ์)</td>
+          <td><span class="mat-num c-orange">297</span></td>
+        </tr>
+        <tr class="row-heavy">
+          <td><span class="plus-tag c-orange border-orange">+ เหตุฉกรรจ์</span></td>
+          <td>ได้รับอันตราย<strong>สาหัส</strong> (ผลฉกรรจ์)</td>
+          <td><span class="mat-num c-orange">298</span></td>
+        </tr>
+        <tr class="row-mild">
+          <td rowspan="2"><strong>ทำร้าย</strong></td>
+          <td>—</td>
+          <td>ได้รับอันตราย<strong>แก่กาย/จิตใจ</strong></td>
+          <td><span class="mat-num c-orange">295</span></td>
+        </tr>
+        <tr class="row-mild">
+          <td><span class="plus-tag c-orange border-orange">+ เหตุฉกรรจ์</span></td>
+          <td>ได้รับอันตราย<strong>แก่กาย/จิตใจ</strong></td>
+          <td><span class="mat-num c-orange">296</span></td>
+        </tr>
+        <tr class="row-none">
+          <td rowspan="2"><strong>ทำร้าย</strong></td>
+          <td>—</td>
+          <td><strong>ไม่ได้รับ</strong>อันตรายแก่กายหรือจิตใจ</td>
+          <td><span class="mat-num c-teal">391</span></td>
+        </tr>
+        <tr class="row-none">
+          <td><span class="plus-tag c-orange border-orange">+ เหตุฉกรรจ์</span></td>
+          <td><strong>ไม่ได้รับ</strong>อันตรายแก่กายหรือจิตใจ</td>
+          <td><span class="mat-num c-teal">391</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="note" style="background:rgba(251,146,60,.07);border-color:rgba(251,146,60,.3)">
+    <strong style="color:var(--orange)">📌 หลักความแตกต่าง ฆ่า vs ทำร้าย</strong><br>
+    ฆ่า = มีเจตนา<strong>ประสงค์ต่อผล</strong>ให้ตาย / ทำร้าย = มีเจตนา<strong>ทำร้าย</strong>แต่ไม่ประสงค์ให้ตาย → ผลที่เกิดขึ้น (ตาย/บาดเจ็บ) กำหนดฐานความผิดในมาตราต่างๆ
+  </div>
+</div>
+
+<!-- ======== ประมาท ======== -->
+<div class="section-block" id="sec-neg">
+  <div class="sec-header">
+    <div class="sec-icon" style="background:rgba(74,158,255,.15)">🔵</div>
+    <div class="sec-title">
+      <h2 style="color:var(--blue)">ประมาท — ปราศจากความระมัดระวัง</h2>
+      <p>ไม่มีเจตนา แต่ขาดความระมัดระวังที่พึงมี</p>
+    </div>
+  </div>
+  <div class="matrix-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th style="color:var(--blue)">ฐานการกระทำ</th>
+          <th>ผลที่เกิด</th>
+          <th style="color:var(--gold)">มาตรา</th>
+          <th>หมายเหตุ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="row-death">
+          <td rowspan="4"><strong>ประมาท</strong></td>
+          <td>ถึงแก่<strong>ความตาย</strong></td>
+          <td><span class="mat-num c-blue">291</span></td>
+          <td>ความผิดลหุโทษขั้นสูง</td>
+        </tr>
+        <tr class="row-heavy">
+          <td>ได้รับอันตราย<strong>สาหัส</strong></td>
+          <td><span class="mat-num c-blue">300</span></td>
+          <td>—</td>
+        </tr>
+        <tr class="row-mild">
+          <td>ได้รับอันตราย<strong>แก่กาย/จิตใจ</strong></td>
+          <td><span class="mat-num c-blue">390</span></td>
+          <td>ลหุโทษ</td>
+        </tr>
+        <tr class="row-none">
+          <td><strong>ไม่ได้รับ</strong>อันตรายใดๆ</td>
+          <td><span style="color:var(--text-dim);font-size:.85rem">ไม่มีความผิด</span></td>
+          <td style="color:var(--text-dim);font-size:.8rem">อ้างมาตรา 2 — ไม่มีกฎหมายบัญญัติ</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="note" style="background:rgba(74,158,255,.07);border-color:rgba(74,158,255,.3)">
+    <strong style="color:var(--blue)">📌 กรณีประมาท ไม่มีเหตุฉกรรจ์</strong> — เพราะกระทำโดยประมาท ไม่มีเจตนาจึงไม่มีเหตุฉกรรจ์ตาม ม.289<br>
+    <strong style="color:var(--blue)">⚠️ ถ้าไม่เกิดผล = ไม่ผิด</strong> เพราะกฎหมายไม่บัญญัติความผิดฐานพยายามประมาท (ม.2)
+  </div>
+</div>
+
+<!-- ======== ชุมนุม ======== -->
+<div class="section-block" id="sec-mob">
+  <div class="sec-header">
+    <div class="sec-icon" style="background:rgba(167,139,250,.15)">🟣</div>
+    <div class="sec-title">
+      <h2 style="color:var(--purple)">ชุมนุม — กระทำในกลุ่มชุลมุน</h2>
+      <p>กระทำในกลุ่มชุมนุม ไม่ทราบว่าใครเป็นผู้กระทำ</p>
+    </div>
+  </div>
+  <div class="matrix-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th style="color:var(--purple)">ฐานการกระทำ</th>
+          <th>ผลที่เกิด</th>
+          <th style="color:var(--gold)">มาตรา</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="row-death">
+          <td rowspan="3"><strong>ชุมนุม</strong> (กลุ่มวิวาท/ก่อการร้าย)</td>
+          <td>ถึงแก่<strong>ความตาย</strong></td>
+          <td><span class="mat-num c-purple">294</span></td>
+        </tr>
+        <tr class="row-heavy">
+          <td>ได้รับอันตราย<strong>สาหัส</strong></td>
+          <td><span class="mat-num c-purple">299</span></td>
+        </tr>
+        <tr class="row-none">
+          <td>ได้รับอันตราย<strong>แก่กาย/จิตใจ</strong></td>
+          <td><span style="color:var(--text-dim);font-size:.85rem">ไม่มีความผิด</span><br><span style="font-size:.75rem;color:var(--text-dim)">อ้างมาตรา 2</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="note" style="background:rgba(167,139,250,.07);border-color:rgba(167,139,250,.3)">
+    <strong style="color:var(--purple)">📌 หลักชุมนุม</strong> — ใช้ในกรณีที่มีการก่อเหตุเป็นกลุ่ม แต่ไม่สามารถระบุตัวผู้กระทำได้ชัดเจน กฎหมายจึงให้ทุกคนในกลุ่มรับผิดร่วมกัน สำหรับผลที่เกิดขึ้นตามมาตรา 294 และ 299 เท่านั้น
+  </div>
+</div>
+
+<!-- ======== อาวุธ ======== -->
+<div class="section-block" id="sec-weapon">
+  <div class="sec-header">
+    <div class="sec-icon" style="background:rgba(45,212,191,.15)">🟦</div>
+    <div class="sec-title">
+      <h2 style="color:var(--teal)">อาวุธ และอาวุธปืน — ลหุโทษ</h2>
+      <p>ม.371, 376, 379 — ความผิดเกี่ยวกับการครอบครองและใช้อาวุธ</p>
+    </div>
+  </div>
+  <div class="weapon-grid">
+    <div class="weapon-card" style="border-color:var(--teal)">
+      <h4 style="color:var(--teal)">🔫 อาวุธปืน</h4>
+      <div class="weapon-row">
+        <span class="desc">พาอาวุธปืนไปในเมือง หมู่บ้าน ทางสาธารณะ...</span>
+        <span class="mat-num c-teal" style="font-size:.85rem">371</span>
+      </div>
+      <div class="weapon-row">
+        <span class="desc">ยิงปืน โดยใช้ดินระเบิดโดยใช่เหตุ ในเมือง หมู่บ้าน...</span>
+        <span class="mat-num c-teal" style="font-size:.85rem">376</span>
+      </div>
+      <div class="weapon-row">
+        <span class="desc">ชักหรือแสดงอาวุธปืนในการวิวาท...</span>
+        <span class="mat-num c-teal" style="font-size:.85rem">379</span>
+      </div>
+    </div>
+    <div class="weapon-card" style="border-color:var(--green)">
+      <h4 style="color:var(--green)">🗡️ อาวุธ (ทั่วไป)</h4>
+      <div class="weapon-row">
+        <span class="desc">พาอาวุธไปในเมือง หมู่บ้าน ทางสาธารณะ...</span>
+        <span class="mat-num c-green" style="font-size:.85rem">371</span>
+      </div>
+      <div class="weapon-row">
+        <span class="desc">ชักหรือแสดงอาวุธในการวิวาท...</span>
+        <span class="mat-num c-green" style="font-size:.85rem">379</span>
+      </div>
+    </div>
+  </div>
+  <div class="note" style="background:rgba(45,212,191,.07);border-color:rgba(45,212,191,.3);margin-top:12px">
+    <strong style="color:var(--teal)">📌 อาวุธปืน vs อาวุธทั่วไป</strong><br>
+    อาวุธปืนมีบทบัญญัติพิเศษ <strong>ม.376</strong> เพิ่มเติม (การยิงปืน/ระเบิดโดยไม่มีเหตุ) ซึ่งอาวุธทั่วไปไม่มีข้อบัญญัตินี้ แต่ทั้งคู่ยังคงต้องรับผิดใน <strong>ม.371</strong> (พา) และ <strong>ม.379</strong> (ชัก/แสดง) เหมือนกัน
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<footer>
+  จัดทำโดย จิราเมธ โปติ๊บ 6840030651 มหาวิทยาลัยสุโขทัยธรรมาธิราช <br>
+  Mind Map สรุป ชุดวิชา 41216 กฎหมายอาญา · ความผิดต่อชีวิต ร่างกาย และอาวุธ
+</footer>
+
+<script>
+const tabColors = {
+  all:    { bg:'var(--red)',    color:'#fff',   border:'var(--red)' },
+  kill:   { bg:'transparent',  color:'var(--red)',    border:'var(--red)' },
+  hurt:   { bg:'transparent',  color:'var(--orange)', border:'var(--orange)' },
+  neg:    { bg:'transparent',  color:'var(--blue)',   border:'var(--blue)' },
+  mob:    { bg:'transparent',  color:'var(--purple)', border:'var(--purple)' },
+  weapon: { bg:'transparent',  color:'var(--teal)',   border:'var(--teal)' },
+};
+
+const tabLabels = {
+  all:'🗺️ ภาพรวม', kill:'🔴 ฆ่า (เจตนา)',
+  hurt:'🟠 ทำร้าย (เจตนา)', neg:'🔵 ประมาท',
+  mob:'🟣 ชุมนุม', weapon:'🟦 อาวุธ'
+};
+
+const activeColors = {
+  all:'var(--red)', kill:'var(--red)', hurt:'var(--orange)',
+  neg:'var(--blue)', mob:'var(--purple)', weapon:'var(--teal)'
+};
+
+function showSection(id) {
+  document.querySelectorAll('.section-block').forEach(b => b.classList.remove('show'));
+  document.getElementById('sec-' + id).classList.add('show');
+
+  const tabs = document.querySelectorAll('.tab');
+  const keys = ['all','kill','hurt','neg','mob','weapon'];
+  tabs.forEach((t, i) => {
+    const k = keys[i];
+    if (k === id) {
+      t.style.background = activeColors[k];
+      t.style.color = (k === 'all') ? '#fff' : '#000';
+      t.style.borderColor = activeColors[k];
+    } else {
+      t.style.background = 'var(--card)';
+      t.style.color = activeColors[k];
+      t.style.borderColor = activeColors[k];
+    }
+  });
+}
+</script>
+</body>
+</html>
